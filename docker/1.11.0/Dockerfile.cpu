@@ -2,13 +2,11 @@ FROM ubuntu:16.04
 
 LABEL maintainer="Amazon AI"
 
-ARG framework_installable
 ARG framework_support_installable=sagemaker_tensorflow_container-2.0.0.tar.gz
 ARG py_version
 
 # Validate that arguments are specified
-RUN test $framework_installable || exit 1 \
-    && test $py_version || exit 1
+RUN test $py_version || exit 1
 
 RUN apt-get update && apt-get install -y --no-install-recommends software-properties-common \
     && add-apt-repository ppa:deadsnakes/ppa -y \
@@ -60,9 +58,8 @@ RUN pip install --no-cache-dir -U \
     "sagemaker-tensorflow>=1.11,<1.12" \
     # Let's install TensorFlow separately in the end to avoid
     # the library version to be overwritten
-    && pip install --force-reinstall --no-cache-dir -U $framework_installable \
+    && pip install --force-reinstall --no-cache-dir -U tensorflow==1.11.0 \
     \
-    && rm -f $framework_installable \
     && rm -f $framework_support_installable \
     && pip uninstall -y --no-cache-dir \
     markdown \
