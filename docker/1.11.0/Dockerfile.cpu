@@ -49,7 +49,6 @@ ENV KMP_AFFINITY=granularity=fine,compact,1,0 KMP_BLOCKTIME=1 KMP_SETTINGS=0
 
 WORKDIR /
 
-COPY $framework_installable .
 COPY $framework_support_installable .
 
 RUN pip install --no-cache-dir -U \
