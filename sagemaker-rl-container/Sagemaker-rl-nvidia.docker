@@ -1,4 +1,4 @@
-FROM crr0004/sagemaker-tensorflow-container:nvidia
+FROM local/sagemaker-tensorflow-container:nvidia
 EXPOSE 6379
 EXPOSE 5800
 EXPOSE 6006
@@ -40,15 +40,17 @@ RUN pip3.6 install -U pip setuptools
 
 
 ARG sagemaker_container
+ARG intel_coach
 
 RUN test $sagemaker_container || exit 1
 RUN echo $sagemaker_container
 COPY $sagemaker_container .
+COPY $intel_coach .
 ADD requirements.txt requirements.txt
 
-RUN pip3.6 install -U --no-cache-dir -r requirements.txt tensorflow-gpu==1.12
-RUN pip3.6 install -U --no-cache-dir $sagemaker_container
-RUN rm $sagemaker_container
+RUN pip3.6 install -U --no-cache-dir -r requirements.txt tensorflow-gpu==1.12 $sagemaker_container $intel_coach
+RUN rm -f $sagemaker_container $intel_coach
+
 
 
 COPY redis.conf redis.conf
