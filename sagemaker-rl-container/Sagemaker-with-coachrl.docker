@@ -1,0 +1,17 @@
+FROM crr0004/sagemaker-rl-tensorflow:coach0.11-cpu-py3
+EXPOSE 6379
+EXPOSE 5800
+EXPOSE 6006
+
+WORKDIR /opt/ml
+
+ARG intel_coach=rl-coach-slim-0.11.1.tar.gz
+
+COPY $intel_coach .
+RUN pip install -U --no-cache-dir $intel_coach
+RUN rm $intel_coach
+
+# Starts framework
+ENTRYPOINT ["/bin/bash", "-c", "start.sh train"]
+#ENTRYPOINT ["/bin/bash", "-m", "start.sh"]
+CMD ["start.sh", "train"]
