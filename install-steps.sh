@@ -51,3 +51,4 @@ docker build . -f Robomaker-kinetic-nvidia.docker -t local/robomaker:nvidia
 cd ..
 
 docker run --rm --name dr --env-file ./robomaker.env --network sagemaker-local -d -p 8080:5900 -it local/robomaker:nvidia
+ 
