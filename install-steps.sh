@@ -4,7 +4,7 @@ cd bin/
 nano prepare.sh 
 ./prepare.sh 
 cd ..
-sudo reboot
+
 git clone --branch 2020_version https://github.com/richardfan1126/deepracer.git
 cd deepracer
 git submodule init
@@ -17,6 +17,7 @@ mkdir -p ~/.sagemaker && cp config.yaml ~/.sagemaker
 nano ~/.sagemaker/config.yaml 
 export LOCAL_ENV_VAR_JSON_PATH=$(readlink -f ./env_vars.json)
 cd rl_coach; python rl_deepracer_coach_robomaker.py
+cd ..
 
 cd sagemaker-containers/
 python setup.py sdist
